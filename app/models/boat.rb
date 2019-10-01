@@ -5,26 +5,32 @@ class Boat < ActiveRecord::Base
 
   def self.first_five
     # all.limit(5)
+    Boat.limit(5).to_a
   end
 
   def self.dinghy
     # where("length < 20")
+    Boat.where("length < 20")
   end
 
   def self.ship
     # where("length >= 20")
+    Boat.where("length > 20")
   end
 
   def self.last_three_alphabetically
     # all.order(name: :desc).limit(3)
+    Boat.order(name: :desc).limit(3)
   end
 
   def self.without_a_captain
     # where(captain_id: nil)
+    Boat.where(captain_id: nil)
   end
 
   def self.sailboats
     # includes(:classifications).where(classifications: { name: 'Sailboat' })
+    Boat.includes(:classifications).where(classifications: { name: 'Sailboat' })
   end
 
   def self.with_three_classifications
@@ -33,13 +39,16 @@ class Boat < ActiveRecord::Base
     # milliseconds whereas it would take whole seconds for Ruby to do the same.
     #
     # joins(:classifications).group("boats.id").having("COUNT(*) = 3").select("boats.*")
+    Boat.joins(:classifications).group("boats.id").having("COUNT(*) = 3").select("boats.*")
   end
 
   def self.non_sailboats
     # where("id NOT IN (?)", self.sailboats.pluck(:id))
+    Boat.where("id NOT IN (?)", self.sailboats.pluck(:id))
   end
 
   def self.longest
     # order('length DESC').first
+    Boat.order("length DESC").first
   end
 end
